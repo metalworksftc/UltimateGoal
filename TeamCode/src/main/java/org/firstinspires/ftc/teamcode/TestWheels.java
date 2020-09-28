@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -26,7 +27,7 @@ public class TestWheels extends OpMode {
 
     @Override
     public void loop() {
-        mecanumDrive_Cartesian(-gamepad1.left_stick_x, gamepad1.left_stick_y, 0);
+        mecanumDrive_Cartesian(-gamepad1.left_stick_x, gamepad1.left_stick_y,gamepad1.right_stick_x);
         motor.setPower(gamepad1.right_stick_y *0.5);
         servo.setPosition(1-gamepad1.left_trigger);
     }
@@ -41,10 +42,10 @@ public class TestWheels extends OpMode {
 
         normalize(wheelSpeeds);
 
-        leftFrontMotor.setPower(wheelSpeeds[0]);
-        rightFrontMotor.setPower(wheelSpeeds[1]);
-        leftRearMotor.setPower(wheelSpeeds[2]);
-        rightRearMotor.setPower(wheelSpeeds[3]);
+        rightFrontMotor.setPower(wheelSpeeds[0]);
+        leftFrontMotor.setPower(wheelSpeeds[1]);
+        rightRearMotor.setPower(wheelSpeeds[2]);
+        leftRearMotor.setPower(wheelSpeeds[3]);
         motor.setPower(gamepad1.right_stick_y);
         servo.setPosition(1-gamepad1.left_trigger);
     }   //mecanumDrive_Cartesian
