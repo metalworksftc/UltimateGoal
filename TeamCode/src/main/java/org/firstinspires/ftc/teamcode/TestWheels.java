@@ -7,19 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Test")
+@TeleOp(name = "TestWheels")
 
 public class TestWheels extends OpMode {
-    DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor, motor;
+    DcMotor motor;
     Servo servo;
+    Wheels wheels;
     @Override
     public void init() {
-        leftFrontMotor = hardwareMap.dcMotor.get("lfm");
-        leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFrontMotor = hardwareMap.dcMotor.get("rfm");
-        leftRearMotor = hardwareMap.dcMotor.get("lrm");
-        leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRearMotor = hardwareMap.dcMotor.get("rrm");
+        wheels = new Wheels();
+        wheels.init(hardwareMap);
         motor = hardwareMap.dcMotor.get("m");
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         servo = hardwareMap.servo.get("s");
@@ -29,7 +26,7 @@ public class TestWheels extends OpMode {
     public void loop() {
         mecanumDrive_Cartesian(-gamepad1.left_stick_x, gamepad1.left_stick_y,gamepad1.right_stick_x);
         motor.setPower(gamepad1.right_stick_y *0.5);
-        servo.setPosition(1-gamepad1.left_trigger);
+        servo.setPosition(gamepad1.left_trigger);
     }
     public void mecanumDrive_Cartesian(double x, double y, double rotation)
     {
@@ -42,10 +39,10 @@ public class TestWheels extends OpMode {
 
         normalize(wheelSpeeds);
 
-        rightFrontMotor.setPower(wheelSpeeds[0]);
-        leftFrontMotor.setPower(wheelSpeeds[1]);
-        rightRearMotor.setPower(wheelSpeeds[2]);
-        leftRearMotor.setPower(wheelSpeeds[3]);
+        wheels.rightFrontMotor.setPower(wheelSpeeds[0]);
+        wheels.leftFrontMotor.setPower(wheelSpeeds[1]);
+        wheels.rightRearMotor.setPower(wheelSpeeds[2]);
+        wheels.leftRearMotor.setPower(wheelSpeeds[3]);
         motor.setPower(gamepad1.right_stick_y);
         servo.setPosition(1-gamepad1.left_trigger);
     }   //mecanumDrive_Cartesian
