@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 public class Wheels extends OpMode {
     DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
+    private double inches;
 
     public void init(HardwareMap hardwareMap) {
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
@@ -42,15 +43,24 @@ public class Wheels extends OpMode {
 
     protected static final double DRIVE_CALIBRATION = 54;
     protected static final double CALIBRATION_COUNTS = 4848;
+    double COUNTS_PER_INCH = CALIBRATION_COUNTS/DRIVE_CALIBRATION;
 
-    public void drive_Cartesian(double x, double y, double rotation)
+    public void drive_Cartesian( double x , double y, double rotation)
     {
-        double wheelSpeeds[] = new double[4];
+//        double inchesX;
+//        double inchesY;
+//        double inchesRotation;
+//        inchesX = x * COUNTS_PER_INCH;
+//        inchesY = y * COUNTS_PER_INCH;
+//        inchesRotation = rotation * COUNTS_PER_INCH;
+
+        double wheelSpeeds[] = new double[5];
 
         wheelSpeeds[0] = x + y + rotation;
         wheelSpeeds[1] = -x + y - rotation;
         wheelSpeeds[2] = -x + y + rotation;
         wheelSpeeds[3] = x + y - rotation;
+        wheelSpeeds[4] = -x + -y + rotation;
 
         normalize(wheelSpeeds);
 
@@ -60,29 +70,6 @@ public class Wheels extends OpMode {
         leftRearMotor.setPower(wheelSpeeds[3]);
 
     }   //Drive_Cartesian
-    protected void reverse(double inches, double power) {
-
-        final double COUNTS_PER_INCH = -CALIBRATION_COUNTS / DRIVE_CALIBRATION;
-
-        power = -power;
-
-        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * inches);
-
-        rightFrontMotor.setPower(-power);
-        leftFrontMotor.setPower(power);
-        rightRearMotor.setPower(power);
-        leftRearMotor.setPower(-power);
-
-        while (leftFrontMotor.getCurrentPosition() > target) {
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target + " counts");
-            telemetry.update();
-        }
-
-        leftFrontMotor.setPower(0);
-        rightFrontMotor.setPower(0);
-       // waitSec(0.5);
-    }
-
 
     @Override
     public void init() {

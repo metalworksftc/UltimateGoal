@@ -24,7 +24,7 @@ public class TestWheels extends OpMode {
 
     @Override
     public void loop() {
-        mecanumDrive_Cartesian(-gamepad1.left_stick_x, gamepad1.left_stick_y,gamepad1.right_stick_x);
+        mecanumDrive_Cartesian(gamepad1.left_stick_x, gamepad1.left_stick_y,gamepad1.right_stick_x);
         motor.setPower(gamepad1.right_stick_y *0.5);
         servo.setPosition(gamepad1.left_trigger);
     }
