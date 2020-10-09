@@ -22,6 +22,6 @@ public class WobbleArm extends OpMode {
     public void loop() {
 
         motor.setPower(gamepad1.left_stick_x*0.5);
-        servo.setPosition(1-gamepad1.left_trigger);
+        servo.setPosition(1-gamepad1.right_trigger);
     }
 }

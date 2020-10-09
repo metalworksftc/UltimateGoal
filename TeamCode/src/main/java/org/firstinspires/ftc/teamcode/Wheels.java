@@ -8,9 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
-@TeleOp(name = "Wheels")
-
-public class Wheels extends OpMode {
+public class Wheels {
     DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
     private double inches;
 
@@ -22,7 +20,6 @@ public class Wheels extends OpMode {
         leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearMotor = hardwareMap.dcMotor.get("rrm");
     }
-    public Telemetry telemetry = new TelemetryImpl(this);
     private void normalize(double[] wheelSpeeds) {
         double maxMagnitude = Math.abs(wheelSpeeds[0]);
 
@@ -45,22 +42,13 @@ public class Wheels extends OpMode {
     protected static final double CALIBRATION_COUNTS = 4848;
     double COUNTS_PER_INCH = CALIBRATION_COUNTS/DRIVE_CALIBRATION;
 
-    public void drive_Cartesian( double x , double y, double rotation)
-    {
-//        double inchesX;
-//        double inchesY;
-//        double inchesRotation;
-//        inchesX = x * COUNTS_PER_INCH;
-//        inchesY = y * COUNTS_PER_INCH;
-//        inchesRotation = rotation * COUNTS_PER_INCH;
-
-        double wheelSpeeds[] = new double[5];
+    public void driveCartesian(double x, double y, double rotation) {
+        double wheelSpeeds[] = new double[4];
 
         wheelSpeeds[0] = x + y + rotation;
         wheelSpeeds[1] = -x + y - rotation;
         wheelSpeeds[2] = -x + y + rotation;
         wheelSpeeds[3] = x + y - rotation;
-        wheelSpeeds[4] = -x + -y + rotation;
 
         normalize(wheelSpeeds);
 
@@ -69,15 +57,16 @@ public class Wheels extends OpMode {
         rightRearMotor.setPower(wheelSpeeds[2]);
         leftRearMotor.setPower(wheelSpeeds[3]);
 
-    }   //Drive_Cartesian
+    }   //mecanumDrive_Cartesian
 
-    @Override
-    public void init() {
+    public  void forward (double power, double distance) {
 
-    }
-
-    @Override
-    public void loop() {
-
+        driveCartesian(0, -power, 0);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        driveCartesian(0,0,0);
     }
 }
