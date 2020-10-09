@@ -63,7 +63,7 @@ public class Wheels {
 
         driveCartesian(0, -power, 0);
         try {
-            Thread.sleep(5000);
+            Thread.sleep((long) distance*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
