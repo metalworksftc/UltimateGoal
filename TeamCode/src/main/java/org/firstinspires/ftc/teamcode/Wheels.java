@@ -71,6 +71,48 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
+    public void backwards (double power, double distance) {
+
+        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
+        driveCartesian(0, power, 0);
+
+        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.update();
+
+        while (leftFrontMotor.getCurrentPosition() < target) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        driveCartesian(0, 0, 0);
+    }
+
+    public void right (double power, double distance) {
+
+        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
+        driveCartesian(power, 0, 0);
+
+        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.update();
+
+        while (leftFrontMotor.getCurrentPosition() < target) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        driveCartesian(0, 0, 0);
+    }
+
+    public void left (double power, double distance) {
+
+        int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
+        driveCartesian(-power, 0, 0);
+
+        while (leftFrontMotor.getCurrentPosition() > target) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        driveCartesian(0, 0, 0);
+    }
+
     public void sleep(double time) {
         try {
             Thread.sleep((long) time * 1000);

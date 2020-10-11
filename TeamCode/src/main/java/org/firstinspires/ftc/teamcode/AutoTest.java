@@ -13,7 +13,7 @@ public class AutoTest extends LinearOpMode {
         wheels = new Wheels();
         wheels.init(hardwareMap, telemetry);
         waitForStart();
-        wheels.forward(0.5, 50);
+        wheels.left(0.5, 20) ;
         sleep(5000);
 
     }
