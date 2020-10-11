@@ -9,11 +9,12 @@ public class AutoTest extends LinearOpMode {
     Wheels wheels;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         wheels = new Wheels();
         wheels.init(hardwareMap, telemetry);
         waitForStart();
-        wheels.forward(0.5, 10);
+        wheels.forward(0.5, 50);
+        sleep(5000);
 
     }
 

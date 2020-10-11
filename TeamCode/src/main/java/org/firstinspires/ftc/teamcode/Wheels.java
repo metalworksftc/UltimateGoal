@@ -55,14 +55,14 @@ public class Wheels {
 
     }   //mecanumDrive_Cartesian
 
-    protected static final double DRIVE_CALIBRATION = 54;
-    protected static final double CALIBRATION_COUNTS = 4848;
+    protected static final double DRIVE_CALIBRATION = 75;
+    protected static final double CALIBRATION_COUNTS = 3000;
     double COUNTS_PER_INCH = CALIBRATION_COUNTS / DRIVE_CALIBRATION;
 
     public void forward(double power, double distance) {
 
-        driveCartesian(0, -power, 0);
         int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
+        driveCartesian(0, -power, 0);
 
         while (leftFrontMotor.getCurrentPosition() > target) {
             telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
