@@ -1,14 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Wheels {
     DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
     Telemetry telemetry;
+    protected Orientation angles;
+    protected BNO055IMU imu;
 
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
@@ -18,6 +26,15 @@ public class Wheels {
         leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearMotor = hardwareMap.dcMotor.get("rrm");
         this.telemetry = telemetry;
+        BNO055IMU.Parameters parameters2 = new BNO055IMU.Parameters();
+        parameters2.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters2.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters2.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters2.loggingEnabled      = true;
+        parameters2.loggingTag          = "IMU";
+        parameters2.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters2);
     }
 
     private void normalize(double[] wheelSpeeds) {
@@ -71,7 +88,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void backwards (double power, double distance) {
+    public void backwards(double power, double distance) {
 
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(0, power, 0);
@@ -86,7 +103,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void right (double power, double distance) {
+    public void right(double power, double distance) {
 
         int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
         driveCartesian(power, 0, 0);
@@ -98,7 +115,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void left (double power, double distance) {
+    public void left(double power, double distance) {
 
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(-power, 0, 0);
@@ -113,6 +130,50 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
+    protected void absoluteTurnPower(float target, double power) {
+        //turn left
+        float distLeft = target - getHeading();
+        if (distLeft < 0) {
+            distLeft += 360;
+        }
+        float distRight = 360 - distLeft;
+
+        if (distLeft < distRight) {
+            //turn left
+            while (distLeft > 8) {
+                distLeft = target - getHeading();
+                if (distLeft < 0) {
+                    distLeft += 360;
+                }
+//                double power = 0.01* (distLeft + 20);
+////                if (power > 0.6) {
+////                    power = 0.6;
+////                }
+//                double power = 0.7;
+                driveCartesian(0,0,target);
+            }
+        } else {
+            //turn right
+            while (distRight > 8) {
+                distLeft = target - getHeading();
+                if (distLeft < 0) {
+                    distLeft += 360;
+                }
+                distRight = 360 - distLeft;
+//                double power = 0.01* (distRight + 20);
+//                if (power > 0.6) {
+//                    power = 0.6;
+//                }
+//                double power = 0.7;
+
+            }
+        }
+       driveCartesian(0,0,0);
+    }
+    protected float getHeading() {
+        angles = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
+        return AngleUnit.DEGREES.normalize(angles.firstAngle);
+    }
 
     public void sleep(double time) {
         try {
