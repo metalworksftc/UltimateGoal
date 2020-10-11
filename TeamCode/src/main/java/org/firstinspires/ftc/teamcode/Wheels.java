@@ -1,25 +1,25 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 public class Wheels {
     DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
-    private double inches;
+    Telemetry telemetry;
 
-    public void init(HardwareMap hardwareMap) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
         leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontMotor = hardwareMap.dcMotor.get("rfm");
         leftRearMotor = hardwareMap.dcMotor.get("lrm");
         leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRearMotor = hardwareMap.dcMotor.get("rrm");
+        this.telemetry = telemetry;
     }
+
     private void normalize(double[] wheelSpeeds) {
         double maxMagnitude = Math.abs(wheelSpeeds[0]);
 
@@ -38,10 +38,6 @@ public class Wheels {
         }
     }
 
-    protected static final double DRIVE_CALIBRATION = 54;
-    protected static final double CALIBRATION_COUNTS = 4848;
-    double COUNTS_PER_INCH = CALIBRATION_COUNTS/DRIVE_CALIBRATION;
-
     public void driveCartesian(double x, double y, double rotation) {
         double wheelSpeeds[] = new double[4];
 
@@ -59,14 +55,27 @@ public class Wheels {
 
     }   //mecanumDrive_Cartesian
 
-    public  void forward (double power, double distance) {
+    protected static final double DRIVE_CALIBRATION = 54;
+    protected static final double CALIBRATION_COUNTS = 4848;
+    double COUNTS_PER_INCH = CALIBRATION_COUNTS / DRIVE_CALIBRATION;
+
+    public void forward(double power, double distance) {
 
         driveCartesian(0, -power, 0);
+        int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
+
+        while (leftFrontMotor.getCurrentPosition() > target) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        driveCartesian(0, 0, 0);
+    }
+
+    public void sleep(double time) {
         try {
-            Thread.sleep((long) distance*1000);
+            Thread.sleep((long) time * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driveCartesian(0,0,0);
     }
 }

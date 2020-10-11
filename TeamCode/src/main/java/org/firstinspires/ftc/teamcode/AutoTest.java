@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class AutoTest extends LinearOpMode {
     Wheels wheels;
+
     @Override
     public void runOpMode() throws InterruptedException {
         wheels = new Wheels();
-        wheels.init(hardwareMap);
+        wheels.init(hardwareMap, telemetry);
         waitForStart();
-        wheels.forward(1, 4 );
+        wheels.forward(0.5, 10);
+
     }
 
 }
