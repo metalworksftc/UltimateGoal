@@ -14,8 +14,7 @@ public class TestWheels extends OpMode {
 
     @Override
     public void init() {
-        wheels = new Wheels();
-        wheels.init(hardwareMap, telemetry);
+        wheels = new Wheels(hardwareMap, telemetry);
         motor = hardwareMap.dcMotor.get("m");
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         servo = hardwareMap.servo.get("s");

@@ -10,12 +10,10 @@ public class AutoTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        wheels = new Wheels();
-        wheels.init(hardwareMap, telemetry);
+        wheels = new Wheels(hardwareMap, telemetry);
         waitForStart();
-        wheels.absoluteTurnPower(90, 0.5); ;
-        sleep(5000);
-
+        wheels.left(20, 0.5); ;
+        wheels.right(20,0.5);
     }
 
 }

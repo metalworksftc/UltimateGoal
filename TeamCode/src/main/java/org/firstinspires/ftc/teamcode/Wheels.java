@@ -18,7 +18,11 @@ public class Wheels {
     protected Orientation angles;
     protected BNO055IMU imu;
 
-    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+    public Wheels(HardwareMap hardwareMap, Telemetry telemetry) {
+        init(hardwareMap,telemetry);
+    }
+
+    private void init(HardwareMap hardwareMap, Telemetry telemetry) {
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
         leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontMotor = hardwareMap.dcMotor.get("rfm");
@@ -76,7 +80,7 @@ public class Wheels {
     protected static final double CALIBRATION_COUNTS = 3000;
     double COUNTS_PER_INCH = CALIBRATION_COUNTS / DRIVE_CALIBRATION;
 
-    public void forward(double power, double distance) {
+    public void forward(double distance, double power) {
 
         int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
         driveCartesian(0, -power, 0);
@@ -88,7 +92,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void backwards(double power, double distance) {
+    public void backwards(double distance, double power) {
 
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(0, power, 0);
@@ -103,7 +107,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void right(double power, double distance) {
+    public void right(double distance, double power) {
 
         int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
         driveCartesian(power, 0, 0);
@@ -115,7 +119,7 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void left(double power, double distance) {
+    public void left(double distance, double power) {
 
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(-power, 0, 0);
@@ -141,35 +145,30 @@ public class Wheels {
         if (distLeft < distRight) {
             //turn left
             while (distLeft > 8) {
+                telemetry.addLine("Driving: " + getHeading() + " of " + target);
+                telemetry.update();
                 distLeft = target - getHeading();
                 if (distLeft < 0) {
                     distLeft += 360;
                 }
-//                double power = 0.01* (distLeft + 20);
-////                if (power > 0.6) {
-////                    power = 0.6;
-////                }
-//                double power = 0.7;
                 driveCartesian(0,0,target);
             }
         } else {
             //turn right
             while (distRight > 8) {
+                telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+                telemetry.update();
                 distLeft = target - getHeading();
                 if (distLeft < 0) {
                     distLeft += 360;
                 }
                 distRight = 360 - distLeft;
-//                double power = 0.01* (distRight + 20);
-//                if (power > 0.6) {
-//                    power = 0.6;
-//                }
-//                double power = 0.7;
-
             }
         }
        driveCartesian(0,0,0);
     }
+
+
     protected float getHeading() {
         angles = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
         return AngleUnit.DEGREES.normalize(angles.firstAngle);
