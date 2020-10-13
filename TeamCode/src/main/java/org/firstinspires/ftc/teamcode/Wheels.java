@@ -76,13 +76,18 @@ public class Wheels {
 
     }   //mecanumDrive_Cartesian
 
-    protected static final double DRIVE_CALIBRATION = 75;
-    protected static final double CALIBRATION_COUNTS = 3000;
+    protected static final double DRIVE_CALIBRATION = 47.5;
+    protected static final double CALIBRATION_COUNTS = 2000;
     double COUNTS_PER_INCH = CALIBRATION_COUNTS / DRIVE_CALIBRATION;
 
     public void forward(double distance, double power) {
 
-        int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
+        forwardCounts(distance*COUNTS_PER_INCH, power);
+    }
+
+    public void forwardCounts (double distance, double power) {
+
+        int target = leftFrontMotor.getCurrentPosition() - (int)  distance;
         driveCartesian(0, -power, 0);
 
         while (leftFrontMotor.getCurrentPosition() > target) {
@@ -93,8 +98,13 @@ public class Wheels {
     }
 
     public void backwards(double distance, double power) {
+        backwardsCount(distance*COUNTS_PER_INCH, power);
 
-        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
+    }
+
+    public void backwardsCount(double distance, double power) {
+
+        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH);
         driveCartesian(0, power, 0);
 
         telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
