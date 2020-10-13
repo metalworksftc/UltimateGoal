@@ -144,6 +144,22 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
+    public void diagonal (double x, double y){
+        int targetX= leftFrontMotor.getCurrentPosition() - (int)  x;
+        int targetY = leftFrontMotor.getCurrentPosition() - (int)  y;
+        driveCartesian(targetX,targetY,0);
+        while (leftFrontMotor.getCurrentPosition() > targetY) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + targetX);
+            telemetry.update();
+        }
+        while (leftFrontMotor.getCurrentPosition() > targetY) {
+            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + targetX);
+            telemetry.update();
+        }
+        driveCartesian(0,0,0);
+
+    }
+
     protected void absoluteTurnPower(float target, double power) {
         //turn left
         float distLeft = target - getHeading();
