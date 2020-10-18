@@ -173,7 +173,7 @@ public class Wheels {
         if (distLeft < distRight) {
             driveCartesian(0,0,-power);
             //turn left
-            while (distLeft > 8) {
+            while (distLeft > 2) {
                 telemetry.addLine("Turning Left: " + getHeading() + " of " + target);
                 telemetry.update();
                 distLeft = target - getHeading();
@@ -184,7 +184,7 @@ public class Wheels {
         } else {
             driveCartesian(0,0,power);
             //turn right
-            while (distRight > 8) {
+            while (distRight > 2) {
                 telemetry.addLine("Turning Right: " + getHeading() + " of " + target);
                 telemetry.update();
                 distLeft = target - getHeading();
