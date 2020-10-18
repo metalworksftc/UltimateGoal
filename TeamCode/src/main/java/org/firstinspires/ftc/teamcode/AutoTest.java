@@ -12,7 +12,10 @@ public class AutoTest extends LinearOpMode {
     public void runOpMode() {
         wheels = new Wheels(hardwareMap, telemetry);
         waitForStart();
-        wheels.diagonal(10, 10); ;
+        wheels.forward(20,0.25);
+        wheels.absoluteTurnPower(90, 0.25);
+        wheels.forward(10,0.25);
+        wheels.absoluteTurnPower(-90,0.25);
     }
 
 }

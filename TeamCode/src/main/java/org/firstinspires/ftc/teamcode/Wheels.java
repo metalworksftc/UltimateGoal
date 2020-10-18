@@ -144,16 +144,16 @@ public class Wheels {
         driveCartesian(0, 0, 0);
     }
 
-    public void diagonal (double x, double y){
-        int targetX= leftFrontMotor.getCurrentPosition() - (int)  x;
-        int targetY = leftFrontMotor.getCurrentPosition() - (int)  y;
-        driveCartesian(targetX,targetY,0);
-        while (leftFrontMotor.getCurrentPosition() > targetY) {
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + targetX);
+    public void diagonal (double x, double y, double power){
+        int targetX= rightFrontMotor.getCurrentPosition() - (int)  (COUNTS_PER_INCH * x);
+        int targetY = rightFrontMotor.getCurrentPosition() - (int)  y;
+        driveCartesian(power, power,0);
+        while (rightFrontMotor.getCurrentPosition() > targetY) {
+            telemetry.addLine("Driving: " + rightFrontMotor.getCurrentPosition() + " of " + targetX);
             telemetry.update();
         }
-        while (leftFrontMotor.getCurrentPosition() > targetY) {
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + targetX);
+        while (rightFrontMotor.getCurrentPosition() > targetY) {
+            telemetry.addLine("Driving: " + rightFrontMotor.getCurrentPosition() + " of " + targetX);
             telemetry.update();
         }
         driveCartesian(0,0,0);
@@ -168,21 +168,24 @@ public class Wheels {
         }
         float distRight = 360 - distLeft;
 
+        telemetry.addLine(String.valueOf("distLeft " + distLeft + "distRight " + distRight));
+        telemetry.update();
         if (distLeft < distRight) {
+            driveCartesian(0,0,-power);
             //turn left
             while (distLeft > 8) {
-                telemetry.addLine("Driving: " + getHeading() + " of " + target);
+                telemetry.addLine("Turning Left: " + getHeading() + " of " + target);
                 telemetry.update();
                 distLeft = target - getHeading();
                 if (distLeft < 0) {
                     distLeft += 360;
                 }
-                driveCartesian(0,0,target);
             }
         } else {
+            driveCartesian(0,0,power);
             //turn right
             while (distRight > 8) {
-                telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+                telemetry.addLine("Turning Right: " + getHeading() + " of " + target);
                 telemetry.update();
                 distLeft = target - getHeading();
                 if (distLeft < 0) {
@@ -200,9 +203,9 @@ public class Wheels {
         return AngleUnit.DEGREES.normalize(angles.firstAngle);
     }
 
-    public void sleep(double time) {
+    public void sleep(double seconds) {
         try {
-            Thread.sleep((long) time * 1000);
+            Thread.sleep((long) seconds * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
