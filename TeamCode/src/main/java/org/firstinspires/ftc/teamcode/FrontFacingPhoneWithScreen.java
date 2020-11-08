@@ -1,4 +1,5 @@
-/* Copyright (c) 2019 FIRST. All rights reserved.
+package org.firstinspires.ftc.teamcode;
+/** Copyright (c) 2019 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -27,9 +28,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -51,6 +49,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
+import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.FRONT;
 
 /**
  * This 2020-2021 OpMode illustrates the basics of using the Vuforia localizer to determine
@@ -85,14 +84,13 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  */
 
 
-@TeleOp(name="ULTIMATEGOAL Vision" +
-        "", group ="Concept")
+@TeleOp(name="Front Facing Phone Front Screen", group ="Concept")
 //@Disabled
-public class UltimateGoalVision extends LinearOpMode {
+public class FrontFacingPhoneWithScreen extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
-    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
-    private static final boolean PHONE_IS_PORTRAIT = false  ;
+    private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = FRONT;
+    private static final boolean PHONE_IS_PORTRAIT = true  ;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -107,7 +105,7 @@ public class UltimateGoalVision extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " AV5DiRv/////AAABmQQY+qA6hk+yvs2h+C9m7O0RUTsHHsO90qj9c2c7U2NiWAGSvnLjTlL5NWFlyOcqHjqMAk4UNRsDPhS15hb3argJVORiC7ra0KqgkIGfaOcujDTpGtpWrcvnKS1bvM2UIhpLjy20Do5TPt2HRhfEo3MqDFehYGpA48mYCLEbBL4mhl1RdCZYAWHbsZgYTbyOzieaEvwcjSYHJDV+sQUkqzRrHXQx6OZtDtz9BkZalvvJa+pGGhBhN9PEXwZkU6gfon3LRZS8NJv84Az5/dsHvCNwdNpaFTyW62emm5+Q9Nf9iIgkH9b7Wk4b7RbYL3SdAr9PzWeSVi0DxZ2HIkyroAReM8UAwfq75HQdNXQq6hRB";
+            "AV5DiRv/////AAABmQQY+qA6hk+yvs2h+C9m7O0RUTsHHsO90qj9c2c7U2NiWAGSvnLjTlL5NWFlyOcqHjqMAk4UNRsDPhS15hb3argJVORiC7ra0KqgkIGfaOcujDTpGtpWrcvnKS1bvM2UIhpLjy20Do5TPt2HRhfEo3MqDFehYGpA48mYCLEbBL4mhl1RdCZYAWHbsZgYTbyOzieaEvwcjSYHJDV+sQUkqzRrHXQx6OZtDtz9BkZalvvJa+pGGhBhN9PEXwZkU6gfon3LRZS8NJv84Az5/dsHvCNwdNpaFTyW62emm5+Q9Nf9iIgkH9b7Wk4b7RbYL3SdAr9PzWeSVi0DxZ2HIkyroAReM8UAwfq75HQdNXQq6hRB";
 
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here
@@ -126,7 +124,7 @@ public class UltimateGoalVision extends LinearOpMode {
      * This is the webcam we are to use. As with other hardware devices such as motors and
      * servos, this device is identified using the robot configuration tool in the FTC application.
      */
-    WebcamName webcamName = null;
+//    WebcamName webcamName = null;
 
     private boolean targetVisible = false;
     private float phoneXRotate    = 0;
@@ -137,36 +135,32 @@ public class UltimateGoalVision extends LinearOpMode {
         /*
          * Retrieve the camera we are to use.
          */
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+//        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
-        telemetry.addLine("got past hardwareMap");
-        telemetry.update();
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
          * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
          */
-//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-//        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+//         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection   = CAMERA_CHOICE;
 
-        /**
+
+        /*
          * We also indicate which camera on the RC we wish to use.
          */
-        parameters.cameraName = webcamName;
+//        parameters.cameraName = webcamName;
 
         // Make sure extended tracking is disabled for this example.
         parameters.useExtendedTracking = false;
 
-        telemetry.addLine("Right before vuforia init");
-        telemetry.update();
-
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
 
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
@@ -186,7 +180,7 @@ public class UltimateGoalVision extends LinearOpMode {
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsUltimateGoal);
 
-        /**
+        /*
          * In order for localization to work, we need to tell the system where each target is on the field, and
          * where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
          * Transformation matrices are a central, important concept in the math here involved in localization.
@@ -260,7 +254,7 @@ public class UltimateGoalVision extends LinearOpMode {
                     .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
                     .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
 
-        /**  Let all the trackable listeners know where the phone is.  */
+        /*  Let all the trackable listeners know where the phone is.  */
         for (VuforiaTrackable trackable : allTrackables) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }

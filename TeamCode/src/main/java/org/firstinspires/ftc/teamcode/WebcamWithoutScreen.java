@@ -85,9 +85,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  */
 
 
-@TeleOp(name="ULTIMATEGOAL Vuforia Webcam", group ="Concept")
+@TeleOp(name="Webcam", group ="Concept")
 //@Disabled
-public class UltimateGoalVision2 extends LinearOpMode {
+public class WebcamWithoutScreen extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -136,7 +136,7 @@ public class UltimateGoalVision2 extends LinearOpMode {
         /*
          * Retrieve the camera we are to use.
          */
-//        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
@@ -149,11 +149,13 @@ public class UltimateGoalVision2 extends LinearOpMode {
 //         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection   = BACK;
+
 
         /**
          * We also indicate which camera on the RC we wish to use.
          */
-//        parameters.cameraName = webcamName;
+        parameters.cameraName = webcamName;
 
         // Make sure extended tracking is disabled for this example.
         parameters.useExtendedTracking = false;
