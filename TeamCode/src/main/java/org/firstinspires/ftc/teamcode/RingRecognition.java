@@ -38,7 +38,7 @@ public class RingRecognition extends LinearOpMode {
         }
         if (opModeIsActive()) {
             List<Recognition> updatedRecognitions = null;
-            while (opModeIsActive() && updatedRecognitions == null) {
+            while (opModeIsActive() && (updatedRecognitions == null || updatedRecognitions.size() == 0)) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
                 updatedRecognitions = tfod.getUpdatedRecognitions();
