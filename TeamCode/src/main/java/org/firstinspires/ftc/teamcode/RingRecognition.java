@@ -33,6 +33,15 @@ public class RingRecognition extends LinearOpMode {
 
         wheels.forward(8, 0.25);
 
+        seeRings();
+        telemetry.addLine("Stack Detected");
+        telemetry.update();
+        sleep(2500);
+
+
+    }
+
+    private void seeRings() {
         if (tfod != null) {
             tfod.activate();
         }
@@ -60,14 +69,9 @@ public class RingRecognition extends LinearOpMode {
 
             }
         }
-        telemetry.addLine("Stack Detected");
-        telemetry.update();
-        sleep(2500);
-
-
     }
 
-        private void initVuforia() {
+    private void initVuforia() {
             /*
              * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
              */
