@@ -26,8 +26,6 @@ public class RingRecognition extends LinearOpMode {
 
 
         camera.seeRings();
-        telemetry.addLine("Stack Detected");
-        telemetry.update();
         sleep(2500);
     }
 }

@@ -43,13 +43,15 @@ public class Camera {
         }
         if (linearOpMode.opModeIsActive()) {
             List<Recognition> updatedRecognitions = null;
-            while (linearOpMode.opModeIsActive() && (updatedRecognitions == null || updatedRecognitions.size() == 0)) {
+            long targetTime = System.currentTimeMillis() + 7000;
+            while (linearOpMode.opModeIsActive() &&
+                    System.currentTimeMillis() < targetTime
+                    && (updatedRecognitions == null || updatedRecognitions.size() == 0)) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
                 updatedRecognitions = tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
                     telemetry.addData("# Object Detected", updatedRecognitions.size());
-
                     // step through the list of recognitions and display boundary info.
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
