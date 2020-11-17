@@ -36,13 +36,12 @@ public class Camera {
         initVuforia();
         initTfod();
     }
-
-    public void seeRings() {
+    public String seeRings() {
         if (tfod != null) {
             tfod.activate();
         }
+        List<Recognition> updatedRecognitions = null;
         if (linearOpMode.opModeIsActive()) {
-            List<Recognition> updatedRecognitions = null;
             long targetTime = System.currentTimeMillis() + 7000;
             while (linearOpMode.opModeIsActive() &&
                     System.currentTimeMillis() < targetTime
@@ -64,10 +63,14 @@ public class Camera {
                     telemetry.update();
                     linearOpMode.sleep(2000);
                 }
-
             }
         }
+        if (updatedRecognitions.size() == 0){
+            return "no stack";
+        }
+        return updatedRecognitions.get(0).getLabel();
     }
+
 
     private void initVuforia() {
         /*

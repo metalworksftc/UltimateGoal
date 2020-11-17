@@ -25,7 +25,27 @@ public class RingRecognition extends LinearOpMode {
         wheels.forward(8, 0.25);
 
 
-        camera.seeRings();
+        String rings = camera.seeRings();
         sleep(2500);
+        telemetry.addLine(rings);
+        telemetry.update();
+        sleep(2500);
+
+        if (rings.equals("Quad")) {
+            wheels.left(25,0.5);
+            wheels.forward(100,0.5);
+        }
+        else if (rings.equals("Single")){
+            wheels.left(0,0.5);
+            wheels.forward(75,0.5);
+        }
+        else if (rings.equals("no stack")){
+            wheels.left(20,0.5);
+            wheels.forward(55,0.5);
+        }
+
+
+
+
     }
 }
