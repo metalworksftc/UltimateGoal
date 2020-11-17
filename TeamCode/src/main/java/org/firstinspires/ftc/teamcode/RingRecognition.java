@@ -32,15 +32,15 @@ public class RingRecognition extends LinearOpMode {
         sleep(2500);
 
         if (rings.equals("Quad")) {
-            wheels.left(25,0.5);
-            wheels.forward(100,0.5);
+            wheels.left(30,0.5);
+            wheels.forward(95,0.5);
         }
         else if (rings.equals("Single")){
             wheels.left(0,0.5);
             wheels.forward(75,0.5);
         }
         else if (rings.equals("no stack")){
-            wheels.left(20,0.5);
+            wheels.left(30,0.5);
             wheels.forward(55,0.5);
         }
 
