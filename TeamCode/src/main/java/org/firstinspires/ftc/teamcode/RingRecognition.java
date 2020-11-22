@@ -23,16 +23,16 @@ public class RingRecognition extends LinearOpMode {
         wheels = new Wheels(hardwareMap, telemetry);
         camera = new Camera(hardwareMap, telemetry, this);
         arm = new Arm(hardwareMap, telemetry);
+        arm.close();
         waitForStart();
 
         wheels.forward(8, 0.25);
 
 
         String rings = camera.seeRings();
-        sleep(2500);
         telemetry.addLine(rings);
         telemetry.update();
-        sleep(2500);
+        sleep(1000);
 
         if (rings.equals("Quad")) {
             wheels.left(30, 0.5);
@@ -40,18 +40,20 @@ public class RingRecognition extends LinearOpMode {
             wheels.forward(95, 0.5);
             sleep(2000);
             arm.drop();
+            wheels.backwards(45,0.5);
         } else if (rings.equals("Single")) {
             wheels.left(0, 0.5);
             wheels.forward(75, 0.5);
             sleep(2000);
             arm.drop();
+            wheels.backwards(15,0.5);
         } else if (rings.equals("no stack")) {
             wheels.left(30, 0.5);
             wheels.absoluteTurnPower(0, 0.5);
-            wheels.forward(43, 0.5);
+            wheels.forward(47, 0.5);
             sleep(2000);
             arm.drop();
-            wheels.backwards(10, 0.5);
+            wheels.backwards(5, 0.5);
         }
     }
 }

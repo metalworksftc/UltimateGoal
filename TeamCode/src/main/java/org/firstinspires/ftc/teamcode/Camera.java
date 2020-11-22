@@ -35,6 +35,7 @@ public class Camera {
         this.hardwareMap = hardwareMap;
         initVuforia();
         initTfod();
+
     }
     public String seeRings() {
         if (tfod != null) {

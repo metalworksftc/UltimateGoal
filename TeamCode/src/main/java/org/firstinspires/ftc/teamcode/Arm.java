@@ -67,10 +67,10 @@ public class Arm {
 
     public  void  drop(){
         down(2000,0.5);
-        sleep(500);
+        sleep(0.5);
         open();
-        sleep(1000);
-        up(2000,0.5);
+        sleep(1);
+        up(20,0.5);
     }
 
 
