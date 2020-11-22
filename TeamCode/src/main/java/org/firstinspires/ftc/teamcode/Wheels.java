@@ -104,7 +104,7 @@ public class Wheels {
 
     public void backwardsCount(double distance, double power) {
 
-        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH);
+        int target = leftFrontMotor.getCurrentPosition() + (int) (distance);
         driveCartesian(0, power, 0);
 
         telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
@@ -184,7 +184,7 @@ public class Wheels {
         } else {
             driveCartesian(0,0,power);
             //turn right
-            while (distRight > 8) {
+            while (distRight > 2) {
                 telemetry.addLine("Turning Right: " + getHeading() + " of " + target);
                 telemetry.update();
                 distLeft = target - getHeading();

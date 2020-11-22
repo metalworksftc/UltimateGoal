@@ -26,15 +26,51 @@ public class Arm {
         armMotor = hardwareMap.dcMotor.get("am");
 //        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fingerServo = hardwareMap.servo.get("fs");
+        this.telemetry = telemetry;
 
     }
 
-    public void close (float position) {
+    public void setFingerPosition (float position) {
         fingerServo.setPosition(position);
     }
 
+    public void open (){
+        setFingerPosition(0);
+    }
+    public void close(){
+        setFingerPosition(1);
+    }
     public void swing (double position) {
         armMotor.setPower(-position);
+    }
+
+    public  void down (double distance, double power){
+        int target = armMotor.getCurrentPosition() + (int)  distance;
+        armMotor.setPower(power);
+        while (armMotor.getCurrentPosition() < target) {
+            telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        armMotor.setPower(0);
+    }
+
+    public void up (double distance, double power) {
+
+        int target = armMotor.getCurrentPosition() - (int) distance;
+        armMotor.setPower(-power);
+        while (armMotor.getCurrentPosition() > target) {
+            telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
+            telemetry.update();
+        }
+        armMotor.setPower(0);
+    }
+
+    public  void  drop(){
+        down(2000,0.5);
+        sleep(500);
+        open();
+        sleep(1000);
+        up(2000,0.5);
     }
 
 

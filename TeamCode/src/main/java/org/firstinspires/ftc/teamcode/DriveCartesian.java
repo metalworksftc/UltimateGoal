@@ -20,7 +20,7 @@ public class DriveCartesian extends OpMode {
     @Override
     public void loop() {
         wheels.driveCartesian(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-        arm.close(gamepad2.right_trigger);
+        arm.setFingerPosition(gamepad2.right_trigger);
         arm.swing(gamepad2.right_stick_y*0.75);
         telemetry.addLine(String.valueOf(arm.armMotor.getCurrentPosition()));
         telemetry.update();
