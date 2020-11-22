@@ -17,12 +17,14 @@ public class Wheels {
     Telemetry telemetry;
     protected Orientation angles;
     protected BNO055IMU imu;
+    Arm arm;
 
     public Wheels(HardwareMap hardwareMap, Telemetry telemetry) {
         init(hardwareMap,telemetry);
     }
 
     private void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        arm = new Arm(hardwareMap, telemetry);
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
         leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFrontMotor = hardwareMap.dcMotor.get("rfm");
@@ -209,5 +211,15 @@ public class Wheels {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public double driveSpeed = 0.5;
+
+    public void standardDrive(int left, int forward, int back) {
+        left(left, driveSpeed);
+        absoluteTurnPower(0, driveSpeed);
+        forward(forward, driveSpeed);
+        sleep(2000);
+        arm.drop();
+        backwards(back, driveSpeed);
     }
 }

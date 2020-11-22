@@ -34,26 +34,16 @@ public class RingRecognition extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
+
         if (rings.equals("Quad")) {
-            wheels.left(30, 0.5);
-            wheels.absoluteTurnPower(0, 0.5);
-            wheels.forward(95, 0.5);
-            sleep(2000);
-            arm.drop();
-            wheels.backwards(45,0.5);
+            wheels.standardDrive(30,95,45);
+
         } else if (rings.equals("Single")) {
-            wheels.left(0, 0.5);
-            wheels.forward(75, 0.5);
-            sleep(2000);
-            arm.drop();
-            wheels.backwards(15,0.5);
+            wheels.standardDrive(0,75,15);
+
         } else if (rings.equals("no stack")) {
-            wheels.left(30, 0.5);
-            wheels.absoluteTurnPower(0, 0.5);
-            wheels.forward(47, 0.5);
-            sleep(2000);
-            arm.drop();
-            wheels.backwards(5, 0.5);
+            wheels.standardDrive(30,47,5);
         }
+
     }
 }
