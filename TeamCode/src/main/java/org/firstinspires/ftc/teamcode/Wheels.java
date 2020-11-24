@@ -205,19 +205,20 @@ public class Wheels {
         return AngleUnit.DEGREES.normalize(angles.firstAngle);
     }
 
-    public void sleep(double seconds) {
+    public void sleep(double milliseconds) {
         try {
-            Thread.sleep((long) seconds * 1000);
+            Thread.sleep((long) milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
     public double driveSpeed = 0.5;
 
-    public void standardDrive(int left, int forward, int back) {
+    public void standardDrive(int left, int forward, int back, int right) {
         left(left, driveSpeed);
         absoluteTurnPower(0, driveSpeed);
         forward(forward, driveSpeed);
+        right(right,driveSpeed);
         sleep(2000);
         arm.drop();
         backwards(back, driveSpeed);

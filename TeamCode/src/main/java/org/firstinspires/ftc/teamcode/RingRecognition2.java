@@ -3,17 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+@Autonomous(name = "RingRecognition2")
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Autonomous(name = "RingRecognition")
-
-public class RingRecognition extends LinearOpMode {
+public class RingRecognition2 extends LinearOpMode {
     Wheels wheels;
     Camera camera;
     Arm arm;
@@ -39,7 +31,7 @@ public class RingRecognition extends LinearOpMode {
             wheels.standardDrive(30,95,45,0);
 
         } else if (rings.equals("Single")) {
-            wheels.standardDrive(0,75,15,0);
+            wheels.standardDrive(30,75,15,30);
 
         } else if (rings.equals("no stack")) {
             wheels.standardDrive(30,47,5,0);
