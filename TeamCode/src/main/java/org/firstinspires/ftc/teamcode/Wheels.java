@@ -199,7 +199,6 @@ public class Wheels {
        driveCartesian(0,0,0);
     }
 
-
     protected float getHeading() {
         angles = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
         return AngleUnit.DEGREES.normalize(angles.firstAngle);
@@ -214,7 +213,16 @@ public class Wheels {
     }
     public double driveSpeed = 0.5;
 
-    public void standardDrive(int left, int forward, int back, int right) {
+    public void standardDrive(int left, int forward, int back) {
+        left(left, driveSpeed);
+        absoluteTurnPower(0, driveSpeed);
+        forward(forward, driveSpeed);
+        sleep(2000);
+        arm.drop();
+        backwards(back, driveSpeed);
+    }
+
+    public void driveAround(int left, int forward, int back, int right) {
         left(left, driveSpeed);
         absoluteTurnPower(0, driveSpeed);
         forward(forward, driveSpeed);

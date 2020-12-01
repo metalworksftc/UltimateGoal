@@ -36,13 +36,13 @@ public class RingRecognition extends LinearOpMode {
 
 
         if (rings.equals("Quad")) {
-            wheels.standardDrive(30,95,45,0);
+            wheels.standardDrive(30,95,45);
 
         } else if (rings.equals("Single")) {
-            wheels.standardDrive(0,75,15,0);
+            wheels.standardDrive(0,75,15);
 
         } else if (rings.equals("no stack")) {
-            wheels.standardDrive(30,47,5,0);
+            wheels.standardDrive(30,45,1);
         }
 
     }

@@ -43,7 +43,7 @@ public class Camera {
         }
         List<Recognition> updatedRecognitions = null;
         if (linearOpMode.opModeIsActive()) {
-            long targetTime = System.currentTimeMillis() + 7000;
+            long targetTime = System.currentTimeMillis() + 3750;
             while (linearOpMode.opModeIsActive() &&
                     System.currentTimeMillis() < targetTime
                     && (updatedRecognitions == null || updatedRecognitions.size() == 0)) {
@@ -62,7 +62,7 @@ public class Camera {
                                 recognition.getRight(), recognition.getBottom());
                     }
                     telemetry.update();
-                    linearOpMode.sleep(2000);
+                   linearOpMode.sleep(2000);
                 }
             }
         }

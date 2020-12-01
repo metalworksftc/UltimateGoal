@@ -22,19 +22,19 @@ public class RingRecognition2 extends LinearOpMode {
 
 
         String rings = camera.seeRings();
-        telemetry.addLine(rings);
-        telemetry.update();
-        sleep(1000);
+//        telemetry.addLine(rings);
+//        telemetry.update();
+//        sleep(1000);
 
 
         if (rings.equals("Quad")) {
-            wheels.standardDrive(30,95,45,0);
+            wheels.standardDrive(30,95,45);
 
         } else if (rings.equals("Single")) {
-            wheels.standardDrive(30,75,15,30);
+            wheels.driveAround(30,75,15,30);
 
         } else if (rings.equals("no stack")) {
-            wheels.standardDrive(30,47,5,0);
+            wheels.standardDrive(30,45,1);
         }
 
     }

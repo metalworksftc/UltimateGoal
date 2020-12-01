@@ -8,18 +8,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class AutoTest extends LinearOpMode {
     Wheels wheels;
     Arm arm;
+    Camera camera;
 
     @Override
     public void runOpMode() {
         wheels = new Wheels(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
+        camera = new Camera(hardwareMap, telemetry, this);
         arm.close();
         waitForStart();
-        arm.down(2000,0.5);
-        sleep(500);
-        arm.open();
+        wheels.forward(8, 0.25);
+        String rings = camera.seeRings();
+        telemetry.addLine(rings);
+        telemetry.update();
         sleep(1000);
-        arm.up(2000,0.5);
     }
-
 }
