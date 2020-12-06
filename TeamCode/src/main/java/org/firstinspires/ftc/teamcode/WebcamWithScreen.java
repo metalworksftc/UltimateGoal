@@ -87,7 +87,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 @TeleOp(name="ULTIMATEGOAL Vision" +
         "", group ="Concept")
-//@Disabled
+@Disabled
 public class WebcamWithScreen extends LinearOpMode {
 
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;

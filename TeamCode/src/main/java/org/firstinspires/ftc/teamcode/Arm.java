@@ -41,7 +41,7 @@ public class Arm {
         setFingerPosition(1);
     }
     public void swing (double position) {
-        armMotor.setPower(-position);
+        armMotor.setPower(position);
     }
 
     public  void down (double distance, double power){

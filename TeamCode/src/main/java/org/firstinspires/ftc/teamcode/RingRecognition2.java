@@ -20,7 +20,6 @@ public class RingRecognition2 extends LinearOpMode {
 
         wheels.forward(8, 0.25);
 
-
         String rings = camera.seeRings();
 //        telemetry.addLine(rings);
 //        telemetry.update();
@@ -28,14 +27,37 @@ public class RingRecognition2 extends LinearOpMode {
 
 
         if (rings.equals("Quad")) {
-            wheels.standardDrive(30,95,45);
+            standardDrive(30,95,45);
 
         } else if (rings.equals("Single")) {
-            wheels.driveAround(30,75,15,30);
+            driveAround(30,75,15,30);
 
         } else if (rings.equals("no stack")) {
-            wheels.standardDrive(30,45,1);
+            standardDrive(30,45,1);
         }
 
+    }
+
+    public void standardDrive(int left, int forward, int back) {
+        wheels.left(left,wheels.driveSpeed);
+        wheels.absoluteTurnPower(0, wheels.driveSpeed);
+        wheels.forward(forward, wheels.driveSpeed);
+        sleep(2000);
+        arm.drop();
+        wheels.backwards(back, wheels.driveSpeed);
+        sleep(500);
+        wheels.right(10,wheels.driveSpeed);
+    }
+
+    public void driveAround(int left, int forward, int back, int right) {
+        wheels.left(left, wheels.driveSpeed);
+        wheels.absoluteTurnPower(0, wheels.driveSpeed);
+        wheels.forward(forward, wheels.driveSpeed);
+        wheels.right(right-5,wheels.driveSpeed);
+        sleep(2000);
+        arm.drop();
+        wheels.backwards(back, wheels.driveSpeed);
+        sleep(500);
+        wheels.right(10,wheels.driveSpeed);
     }
 }
