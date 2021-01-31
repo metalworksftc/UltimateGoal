@@ -20,6 +20,6 @@ public class OneMotor extends OpMode {
     @Override
     public void loop() {
 
-        motor.setPower(gamepad1.left_stick_y);
+        motor.setPower(-gamepad1.left_stick_y);
     }
 }
