@@ -45,9 +45,9 @@ public class Arm {
     }
 
     public  void down (double distance, double power){
-        int target = armMotor.getCurrentPosition() + (int)  distance;
-        armMotor.setPower(power);
-        while (armMotor.getCurrentPosition() < target) {
+        int target = armMotor.getCurrentPosition() - (int)  distance;
+        armMotor.setPower(-power);
+        while (armMotor.getCurrentPosition() > target) {
             telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
@@ -58,7 +58,7 @@ public class Arm {
 
         int target = armMotor.getCurrentPosition() - (int) distance;
         armMotor.setPower(-power);
-        while (armMotor.getCurrentPosition() > target) {
+        while (armMotor.getCurrentPosition() < target) {
             telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
@@ -66,11 +66,14 @@ public class Arm {
     }
 
     public  void  drop(){
-        down(2000,0.5);
+        telemetry.addLine("Going Down");
+        telemetry.update();
+        down(3000,0.5);
         sleep(0.5);
-        open();
-        sleep(1);
+        telemetry.addLine("Going Up");
+        telemetry.update();
         up(20,0.5);
+        open();
     }
 
 

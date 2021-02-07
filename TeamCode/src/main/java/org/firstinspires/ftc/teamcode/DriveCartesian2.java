@@ -29,8 +29,6 @@ public class DriveCartesian2 extends OpMode {
 
         arm.setFingerPosition(gamepad2.right_trigger);
         arm.swing(gamepad2.right_stick_y*0.75);
-        telemetry.addLine(String.valueOf(arm.armMotor.getCurrentPosition()));
-        telemetry.update();
 
 
         if (gamepad1.right_bumper) {

@@ -40,7 +40,7 @@ public class Intake {
         else {
             launchMotor.setPower(0);
         }
-        telemetry.addLine(String.valueOf(launchMotor.getPower()));
+//        telemetry.addLine(String.valueOf(launchMotor.getPower()));
     }
     public void push(float on) {
     pushServo.setPosition(on);
