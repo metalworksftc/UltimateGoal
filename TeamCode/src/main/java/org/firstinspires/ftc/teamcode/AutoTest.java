@@ -16,7 +16,7 @@ public class AutoTest extends LinearOpMode {
         arm = new Arm(hardwareMap, telemetry);
         camera = new Camera(hardwareMap, telemetry, this);
         arm.close();
-        waitForStart();
+            waitForStart();
         wheels.forward(8, 0.25);
         String rings = camera.seeRings();
         telemetry.addLine(rings);

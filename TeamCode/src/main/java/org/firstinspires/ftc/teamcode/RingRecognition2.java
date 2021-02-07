@@ -27,23 +27,24 @@ public class RingRecognition2 extends LinearOpMode {
 
 
         if (rings.equals("Quad")) {
-            standardDrive(30,95,45,80);
+            standardDrive(30,95,30,80);
 
         } else if (rings.equals("Single")) {
-            driveAround(30,75,15,30);
+            driveAround(30,75,15,50);
 
-        } else if (rings.equals("no stack")) {
-            standardDrive(30,45,1,80);
-        }
-
-
+    } else if (rings.equals("no stack")) {
+        standardDrive(30,45,0,80);
     }
+
+
+}
 
     public void standardDrive(int left, int forward, int back, int right) {
         wheels.left(left,wheels.driveSpeed);
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
         sleep(2000);
+        wheels.right(10,wheels.driveSpeed);
         arm.drop();
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);

@@ -56,8 +56,8 @@ public class Arm {
 
     public void up (double distance, double power) {
 
-        int target = armMotor.getCurrentPosition() - (int) distance;
-        armMotor.setPower(-power);
+        int target = armMotor.getCurrentPosition() + (int) distance;
+        armMotor.setPower(power);
         while (armMotor.getCurrentPosition() < target) {
             telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
@@ -72,8 +72,8 @@ public class Arm {
         sleep(0.5);
         telemetry.addLine("Going Up");
         telemetry.update();
-        up(20,0.5);
         open();
+        up(3000,0.5);
     }
 
 
