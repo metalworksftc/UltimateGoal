@@ -17,10 +17,13 @@ public class AutoTest extends LinearOpMode {
         camera = new Camera(hardwareMap, telemetry, this);
         arm.close();
             waitForStart();
-        wheels.forward(8, 0.25);
-        String rings = camera.seeRings();
-        telemetry.addLine(rings);
-        telemetry.update();
-        sleep(1000);
+//        wheels.forward(8, 0.25);
+//        String rings = camera.seeRings();
+//        telemetry.addLine(rings);
+//        telemetry.update();
+//        sleep(1000);
+
+
+        wheels.left(50,0.5);
     }
 }

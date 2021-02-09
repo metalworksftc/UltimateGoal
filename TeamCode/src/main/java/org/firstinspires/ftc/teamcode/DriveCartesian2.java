@@ -30,12 +30,16 @@ public class DriveCartesian2 extends OpMode {
         arm.setFingerPosition(gamepad2.right_trigger);
         arm.swing(gamepad2.right_stick_y*0.75);
 
-
-        if (gamepad1.right_bumper) {
-            wheels.driveCartesian(gamepad1.left_stick_x * 1, gamepad1.left_stick_y * 1, gamepad1.right_stick_x * 1);
+        if (gamepad1.left_bumper) {
+            wheels.reversePower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         }
         else {
-            wheels.driveCartesian(gamepad1.left_stick_x*0.5, gamepad1.left_stick_y*0.5, gamepad1.right_stick_x*0.5);
+            if (gamepad1.right_bumper) {
+                wheels.driveCartesian(gamepad1.left_stick_x * 1, gamepad1.left_stick_y * 1, gamepad1.right_stick_x * 1);
+            }
+            else {
+                wheels.driveCartesian(gamepad1.left_stick_x*0.5, gamepad1.left_stick_y*0.5, gamepad1.right_stick_x*0.5);
+            }
         }
     }
 }

@@ -65,10 +65,10 @@ public class Arm {
         armMotor.setPower(0);
     }
 
-    public  void  drop(){
+    public  void  drop(int counts){
         telemetry.addLine("Going Down");
         telemetry.update();
-        down(3000,0.5);
+        down(counts,0.5);
         sleep(0.5);
         telemetry.addLine("Going Up");
         telemetry.update();

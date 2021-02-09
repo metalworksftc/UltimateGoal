@@ -51,7 +51,7 @@ public class RingRecognition extends LinearOpMode {
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
         sleep(2000);
-        arm.drop();
+        arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
         wheels.right(10,wheels.driveSpeed);

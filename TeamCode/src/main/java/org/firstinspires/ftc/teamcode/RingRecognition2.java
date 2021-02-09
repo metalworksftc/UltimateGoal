@@ -16,6 +16,8 @@ public class RingRecognition2 extends LinearOpMode {
         camera = new Camera(hardwareMap, telemetry, this);
         arm = new Arm(hardwareMap, telemetry);
         arm.close();
+        telemetry.addLine("inited");
+        telemetry.update();
         waitForStart();
 
         wheels.forward(8, 0.25);
@@ -45,10 +47,11 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.forward(forward, wheels.driveSpeed);
         sleep(2000);
         wheels.right(10,wheels.driveSpeed);
-        arm.drop();
+        arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
         wheels.right(right,wheels.driveSpeed);
+        arm.drop(3000);
     }
 
     public void driveAround(int left, int forward, int back, int right) {
@@ -57,9 +60,10 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.forward(forward, wheels.driveSpeed);
         wheels.right(right-5,wheels.driveSpeed);
         sleep(500);
-        arm.drop();
+        arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
         wheels.right(back,wheels.driveSpeed);
+        arm.drop(3000);
     }
 }

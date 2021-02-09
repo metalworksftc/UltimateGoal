@@ -26,7 +26,7 @@ public class Intake {
 
     public void intake(boolean on) {
         if (on){
-            beaterBar.setPower(-1);
+            beaterBar.setPower(-75);
         }
         else {
             beaterBar.setPower(0);
