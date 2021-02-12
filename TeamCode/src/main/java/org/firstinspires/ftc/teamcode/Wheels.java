@@ -144,7 +144,7 @@ public class Wheels {
         while (leftFrontMotor.getCurrentPosition() > target) {
             if (getHeading() < heading){
                 //tweak left
-                driveCartesian(power,-0.05,-0.1);
+                driveCartesian(power,-0.05 ,-0.1);
             }
             else if (getHeading() > heading) {
                 //tweak right
@@ -233,7 +233,7 @@ public class Wheels {
 
 
     public void reversePower( float xPower, float yPower, float rotation){
-        driveCartesian(-xPower*0.5,-yPower*0.5,-rotation*0.5);
+        driveCartesian(-xPower*0.5,-yPower*0.5,rotation*0.5);
 
     }
 

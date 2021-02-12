@@ -9,15 +9,19 @@ public class RingRecognition2 extends LinearOpMode {
     Wheels wheels;
     Camera camera;
     Arm arm;
+    Intake intake;
 
     @Override
     public void runOpMode() {
         wheels = new Wheels(hardwareMap, telemetry);
         camera = new Camera(hardwareMap, telemetry, this);
         arm = new Arm(hardwareMap, telemetry);
+        intake = new Intake(hardwareMap, telemetry);
         arm.close();
+        intake.pushServo.setPosition(0);
         telemetry.addLine("inited");
         telemetry.update();
+
         waitForStart();
 
         wheels.forward(8, 0.25);
@@ -38,7 +42,19 @@ public class RingRecognition2 extends LinearOpMode {
         standardDrive(30,45,0,80);
     }
 
-
+        intake.flywheel(true);
+        sleep(3000);
+        intake.push(1);
+        sleep(1000);
+        intake.push(0);
+        sleep(700);
+        intake.push(1);
+        sleep(1000);
+        intake.push(0);
+        sleep(700);
+        intake.push(1);
+        sleep(1000);
+        intake.push(0);
 }
 
     public void standardDrive(int left, int forward, int back, int right) {
@@ -51,7 +67,7 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
         wheels.right(right,wheels.driveSpeed);
-        arm.drop(3000);
+      //  arm.drop(3000);
     }
 
     public void driveAround(int left, int forward, int back, int right) {
@@ -64,6 +80,6 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
         wheels.right(back,wheels.driveSpeed);
-        arm.drop(3000);
+      //  arm.drop(3000);
     }
 }
