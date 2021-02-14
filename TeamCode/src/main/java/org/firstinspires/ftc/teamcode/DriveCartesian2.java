@@ -18,6 +18,7 @@ public class DriveCartesian2 extends OpMode {
         wheels = new Wheels(hardwareMap, telemetry);
          arm = new Arm(hardwareMap,telemetry);
         intake = new Intake(hardwareMap,telemetry);
+        intake.pushServo.setPosition(0);
     }
 
     @Override

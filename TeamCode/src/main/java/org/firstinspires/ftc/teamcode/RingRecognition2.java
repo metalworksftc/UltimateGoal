@@ -36,7 +36,7 @@ public class RingRecognition2 extends LinearOpMode {
             standardDrive(30,95,30,80);
 
         } else if (rings.equals("Single")) {
-            driveAround(30,75,15,50);
+            driveAround(30,75,15,55);
 
     } else if (rings.equals("no stack")) {
         standardDrive(30,45,0,80);
@@ -44,24 +44,18 @@ public class RingRecognition2 extends LinearOpMode {
 
         intake.flywheel(true);
         sleep(3000);
-        intake.push(1);
-        sleep(1000);
-        intake.push(0);
-        sleep(700);
-        intake.push(1);
-        sleep(1000);
-        intake.push(0);
-        sleep(700);
-        intake.push(1);
-        sleep(1000);
-        intake.push(0);
+        intake.autoPush();
+        wheels.absoluteTurnPower(10,0.5);
+        intake.autoPush();
+        wheels.absoluteTurnPower(-10,0.5);
+        intake.autoPush();
 }
 
     public void standardDrive(int left, int forward, int back, int right) {
         wheels.left(left,wheels.driveSpeed);
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
-        sleep(2000);
+        sleep(500);
         wheels.right(10,wheels.driveSpeed);
         arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
@@ -74,12 +68,12 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.left(left, wheels.driveSpeed);
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
-        wheels.right(right-5,wheels.driveSpeed);
         sleep(500);
+        wheels.right(45,wheels.driveSpeed);
         arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
         sleep(500);
-        wheels.right(back,wheels.driveSpeed);
+        wheels.right(right,wheels.driveSpeed);
       //  arm.drop(3000);
     }
 }

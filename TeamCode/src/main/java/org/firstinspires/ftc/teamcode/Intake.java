@@ -46,4 +46,18 @@ public class Intake {
     pushServo.setPosition(on);
     }
 
+    public void autoPush() {
+        pushServo.setPosition(1);
+        sleep(700);
+        pushServo.setPosition(0);
+    }
+
+    public final void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
 }

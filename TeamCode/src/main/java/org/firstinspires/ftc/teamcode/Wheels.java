@@ -118,10 +118,30 @@ public class Wheels {
 
     public void right(double distance, double power) {
 
+        float heading = getHeading();
+        sleep(2000);
+
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(-power, 0, 0);
 
+        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.addLine("Position " + getHeading());
+        telemetry.update();
+
         while (leftFrontMotor.getCurrentPosition() < target) {
+            if (getHeading() > heading){
+                //tweak right
+                driveCartesian(-power,0.05 ,0.1);
+            }
+            else if (getHeading() > heading) {
+                //tweak left
+                driveCartesian(-power,0,-0.2);
+            }
+            else {
+                //continue
+                driveCartesian(-power,0,0);
+            }
+
             telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
