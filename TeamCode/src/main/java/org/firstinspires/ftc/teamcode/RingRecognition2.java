@@ -45,9 +45,11 @@ public class RingRecognition2 extends LinearOpMode {
         intake.flywheel(true);
         sleep(3000);
         intake.autoPush();
-        wheels.absoluteTurnPower(10,0.5);
+        wheels.absoluteTurnPower(3,0.5);
+        sleep(250);
         intake.autoPush();
-        wheels.absoluteTurnPower(-10,0.5);
+        wheels.absoluteTurnPower(-3,0.5);
+        sleep(250);
         intake.autoPush();
 }
 
@@ -55,12 +57,11 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.left(left,wheels.driveSpeed);
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
-        sleep(500);
         wheels.right(10,wheels.driveSpeed);
         arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
-        sleep(500);
         wheels.right(right,wheels.driveSpeed);
+        wheels.absoluteTurnPower(0,wheels.driveSpeed);
       //  arm.drop(3000);
     }
 
@@ -68,12 +69,11 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.left(left, wheels.driveSpeed);
         wheels.absoluteTurnPower(0, wheels.driveSpeed);
         wheels.forward(forward, wheels.driveSpeed);
-        sleep(500);
         wheels.right(45,wheels.driveSpeed);
         arm.drop(3000);
         wheels.backwards(back, wheels.driveSpeed);
-        sleep(500);
         wheels.right(right,wheels.driveSpeed);
-      //  arm.drop(3000);
+        wheels.absoluteTurnPower(0,wheels.driveSpeed);
+        //  arm.drop(3000);
     }
 }

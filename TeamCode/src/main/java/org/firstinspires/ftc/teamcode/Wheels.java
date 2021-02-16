@@ -119,7 +119,7 @@ public class Wheels {
     public void right(double distance, double power) {
 
         float heading = getHeading();
-        sleep(2000);
+//        sleep(2000);
 
         int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(-power, 0, 0);
@@ -152,7 +152,7 @@ public class Wheels {
     public void left(double distance, double power) {
 
         float heading = getHeading();
-        sleep(2000);
+//        sleep(2000);
 
         int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
         driveCartesian(power, 0, 0);

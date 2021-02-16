@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @TeleOp(name = "DriveCartesion2")
 
 public class DriveCartesian2 extends OpMode {
-    Telemetry telemetry;
     Wheels wheels;
     private Arm arm;
     Intake intake;

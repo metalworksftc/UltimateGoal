@@ -69,7 +69,6 @@ public class Arm {
         telemetry.addLine("Going Down");
         telemetry.update();
         down(counts,0.5);
-        sleep(0.5);
         telemetry.addLine("Going Up");
         telemetry.update();
         open();
