@@ -25,10 +25,17 @@ public class DriveCartesian2 extends OpMode {
 
         intake.intake(gamepad2.left_bumper);
         intake.flywheel(gamepad2.right_bumper);
-        intake.push(gamepad2.left_trigger);
+//        intake.push(gamepad2.left_trigger);
 
         arm.setFingerPosition(gamepad2.right_trigger);
-        arm.swing(gamepad2.right_stick_y*0.75);
+        arm.swing(-gamepad2.right_stick_y*0.75);
+
+        if (intake.flywheelAtSpeed){
+            intake.push(gamepad2.left_trigger);
+        }
+        else {
+            intake.push(0);
+        }
 
         if (gamepad1.left_bumper) {
             wheels.reversePower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
