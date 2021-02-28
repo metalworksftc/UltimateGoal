@@ -24,6 +24,6 @@ public class AutoTest extends LinearOpMode {
 //        sleep(1000);
 
 
-        wheels.right(100,0.5);
+        wheels.forwardCounts(2000,0.5);
     }
 }

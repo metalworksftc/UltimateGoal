@@ -75,7 +75,7 @@ public class Wheels {
 
     }   //mecanumDrive_Cartesian
 
-    protected static final double DRIVE_CALIBRATION = 47.5;
+    protected static final double DRIVE_CALIBRATION = 49.5;
     protected static final double CALIBRATION_COUNTS = 2000;
     double COUNTS_PER_INCH = CALIBRATION_COUNTS / DRIVE_CALIBRATION;
 
@@ -131,11 +131,11 @@ public class Wheels {
         while (leftFrontMotor.getCurrentPosition() < target) {
             if (getHeading() > heading){
                 //tweak right
-                driveCartesian(-power,0.05 ,0.1);
+                driveCartesian(-power,0 ,0.1);
             }
             else if (getHeading() > heading) {
                 //tweak left
-                driveCartesian(-power,0,-0.2);
+                driveCartesian(-power,0,-0.1);
             }
             else {
                 //continue
@@ -164,11 +164,11 @@ public class Wheels {
         while (leftFrontMotor.getCurrentPosition() > target) {
             if (getHeading() < heading){
                 //tweak left
-                driveCartesian(power,-0.05 ,-0.1);
+                driveCartesian(power,0 ,-0.1);
             }
             else if (getHeading() > heading) {
                 //tweak right
-                driveCartesian(power,0,0.2);
+                driveCartesian(power,0,0.1);
             }
             else {
                 //continue

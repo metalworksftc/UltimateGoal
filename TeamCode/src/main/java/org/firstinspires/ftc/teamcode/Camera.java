@@ -62,7 +62,7 @@ public class Camera {
                                 recognition.getRight(), recognition.getBottom());
                     }
                     telemetry.update();
-                   linearOpMode.sleep(2000);
+                   linearOpMode.sleep(500);
                 }
             }
         }

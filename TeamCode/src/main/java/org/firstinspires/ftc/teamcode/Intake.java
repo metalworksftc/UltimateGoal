@@ -12,7 +12,7 @@ public class Intake {
     Telemetry telemetry;
     int formerCounts;
     long formerTime;
-    double flywheelPower = -0.85;
+    double flywheelPower = -0.6;
     public boolean flywheelAtSpeed = false;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -40,39 +40,37 @@ public class Intake {
 
     public void flywheel(boolean on) {
         final long time = System.currentTimeMillis() - formerTime;
-        if (time > 250) {
-            final int counts = launchMotor.getCurrentPosition() - formerCounts;
-            formerCounts = launchMotor.getCurrentPosition();
-            formerTime = System.currentTimeMillis();
-            telemetry.addLine("Counts" + String.valueOf(counts));
-            telemetry.addLine("Time " + String.valueOf(time));
-            final long speed = 1000 * counts / time;
-            telemetry.addLine("Speed Seconds " + String.valueOf(speed));
-            telemetry.addLine("Power " + String.valueOf(flywheelPower));
-            telemetry.update();
+            if (time > 100) {
+                final int counts = launchMotor.getCurrentPosition() - formerCounts;
+                formerCounts = launchMotor.getCurrentPosition();
+                formerTime = System.currentTimeMillis();
+                telemetry.addLine("Counts" + String.valueOf(counts));
+                telemetry.addLine("Time " + String.valueOf(time));
+                final long speed = 1000 * counts / time;
+                telemetry.addLine("Speed Seconds " + String.valueOf(speed));
+                telemetry.addLine("Power " + String.valueOf(flywheelPower));
+                telemetry.update();
 
-                if (speed > -1200 && flywheelPower > -1){
+                if (speed > -1200 && flywheelPower > -0.75) {
                     //tweak up
                     flywheelPower = flywheelPower - 0.1;
-                }
-                else if (speed < -1200 && flywheelPower < 0 ) {
+                } else if (speed < -1200 && flywheelPower < 0) {
                     //tweak down
-                    flywheelPower = flywheelPower + 0.1;
+                    flywheelPower = flywheelPower + 0.75;
                 }
 
-
-                if (speed < -1150 && speed > -1250){
+                if (speed < -1150 && speed > -1250) {
                     flywheelAtSpeed = true;
-                    telemetry.addLine("Flywheel is at speed");
-                    telemetry.update();
-                }
-                else{
+//                    telemetry.addLine("Flywheel is at speed");
+//                    telemetry.update();
+                } else {
                     flywheelAtSpeed = false;
-                    telemetry.addLine("Flywheel is not at speed");
-                    telemetry.update();
+//                    telemetry.addLine("Flywheel is not at speed");
+//                    telemetry.update();
                 }
 
-        }
+            }
+
 
         if (on){
             launchMotor.setPower(flywheelPower);
