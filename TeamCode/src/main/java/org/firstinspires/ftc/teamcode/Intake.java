@@ -29,13 +29,8 @@ public class Intake {
         formerTime = System.currentTimeMillis();
     }
 
-    public void intake(boolean on) {
-        if (on){
-            beaterBar.setPower(-75);
-        }
-        else {
-            beaterBar.setPower(0);
-        }
+    public void intake(float on) {
+            beaterBar.setPower(-on);
     }
 
     public void flywheel(boolean on) {
@@ -87,8 +82,8 @@ public class Intake {
             launchMotor.setPower(0);
         }
     }
-    public void push(float on) {
-    pushServo.setPosition(on);
+    public void push(boolean on) {
+    pushServo.setPosition(on? 1.0: 0);
     }
 
     public void autoPush() {

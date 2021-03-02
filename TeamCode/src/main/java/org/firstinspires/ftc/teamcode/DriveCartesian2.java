@@ -23,7 +23,7 @@ public class DriveCartesian2 extends OpMode {
     @Override
     public void loop() {
 
-        intake.intake(gamepad2.left_bumper);
+        intake.intake(gamepad2.left_trigger);
         intake.flywheel(gamepad2.right_bumper);
 //        intake.push(gamepad2.left_trigger);
 
@@ -31,10 +31,10 @@ public class DriveCartesian2 extends OpMode {
         arm.swing(-gamepad2.right_stick_y*0.75);
 
         if (intake.flywheelAtSpeed){
-            intake.push(gamepad2.left_trigger);
+            intake.push(gamepad2.left_bumper);
         }
         else {
-            intake.push(0);
+            intake.push(false);
         }
 
         if (gamepad1.left_bumper) {
