@@ -22,12 +22,12 @@ public class Wheels {
     }
 
     private void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        rightFrontMotor = hardwareMap.dcMotor.get("rfm");
         leftFrontMotor = hardwareMap.dcMotor.get("lfm");
         leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFrontMotor = hardwareMap.dcMotor.get("rfm");
-        leftRearMotor = hardwareMap.dcMotor.get("lrm");
+        leftRearMotor = hardwareMap.dcMotor.get("lbm");
         leftRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRearMotor = hardwareMap.dcMotor.get("rrm");
+        rightRearMotor = hardwareMap.dcMotor.get("rbm");
         this.telemetry = telemetry;
         BNO055IMU.Parameters parameters2 = new BNO055IMU.Parameters();
         parameters2.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -61,10 +61,10 @@ public class Wheels {
     public void driveCartesian(double x, double y, double rotation) {
         double wheelSpeeds[] = new double[4];
 
-        wheelSpeeds[0] = x + y + rotation;
-        wheelSpeeds[1] = -x + y - rotation;
-        wheelSpeeds[2] = -x + y + rotation;
-        wheelSpeeds[3] = x + y - rotation;
+        wheelSpeeds[0] = x - y - rotation;
+        wheelSpeeds[1] = -x - y + rotation;
+        wheelSpeeds[2] = -x - y - rotation;
+        wheelSpeeds[3] = x - y + rotation;
 
         normalize(wheelSpeeds);
 
@@ -86,11 +86,12 @@ public class Wheels {
 
     public void forwardCounts (double distance, double power) {
 
-        int target = leftFrontMotor.getCurrentPosition() + (int)  distance;
+        int target = leftRearMotor.getCurrentPosition() - (int)  distance;
         driveCartesian(0, power, 0);
 
-        while (leftFrontMotor.getCurrentPosition() < target) {
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        while (leftRearMotor.getCurrentPosition() > target) {
+            telemetry.addLine(String.valueOf(System.currentTimeMillis()));
+            telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
         driveCartesian(0, 0, 0);
@@ -103,14 +104,14 @@ public class Wheels {
 
     public void backwardsCount(double distance, double power) {
 
-        int target = leftFrontMotor.getCurrentPosition() - (int) (distance);
+        int target = leftRearMotor.getCurrentPosition() + (int) (distance);
         driveCartesian(0, -power, 0);
 
-        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
         telemetry.update();
 
-        while (leftFrontMotor.getCurrentPosition() > target) {
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        while (leftRearMotor.getCurrentPosition() < target) {
+            telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
         driveCartesian(0, 0, 0);
@@ -121,28 +122,28 @@ public class Wheels {
         float heading = getHeading();
 //        sleep(2000);
 
-        int target = leftFrontMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
+        int target = leftRearMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
         driveCartesian(-power, 0, 0);
 
-        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
         telemetry.addLine("Position " + getHeading());
         telemetry.update();
 
-        while (leftFrontMotor.getCurrentPosition() < target) {
-            if (getHeading() > heading){
-                //tweak right
-                driveCartesian(-power,0 ,0.1);
-            }
-            else if (getHeading() > heading) {
-                //tweak left
-                driveCartesian(-power,0,-0.1);
-            }
-            else {
-                //continue
-                driveCartesian(-power,0,0);
-            }
+        while (leftRearMotor.getCurrentPosition() > target) {
+//            if (getHeading() < heading){
+//                //tweak right
+//                driveCartesian(-power,0 ,0.1);
+//            }
+//            else if (getHeading() > heading) {
+//                //tweak left
+//                driveCartesian(-power,0,-0.1);
+//            }
+//            else {
+//                //continue
+//                driveCartesian(-power,0,0);
+//            }
 
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+            telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
 
@@ -154,30 +155,30 @@ public class Wheels {
         float heading = getHeading();
 //        sleep(2000);
 
-        int target = leftFrontMotor.getCurrentPosition() - (int) (COUNTS_PER_INCH * distance);
+        int target = leftRearMotor.getCurrentPosition() + (int) (COUNTS_PER_INCH * distance);
         driveCartesian(power, 0, 0);
 
-        telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
+        telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
         telemetry.addLine("Position " + getHeading());
         telemetry.update();
 
-        while (leftFrontMotor.getCurrentPosition() > target) {
-            if (getHeading() < heading){
-                //tweak left
-                driveCartesian(power,0 ,-0.1);
-            }
-            else if (getHeading() > heading) {
-                //tweak right
-                driveCartesian(power,0,0.1);
-            }
-            else {
-                //continue
-                driveCartesian(power,0,0);
-            }
-
-            telemetry.addLine("Driving: " + leftFrontMotor.getCurrentPosition() + " of " + target);
-            telemetry.addLine("Position" + getHeading());
-            telemetry.update();
+        while (leftRearMotor.getCurrentPosition() < target) {
+//            if (getHeading() > heading){
+//                //tweak left
+//                driveCartesian(power,0 ,-0.1);
+//            }
+//            else if (getHeading() < heading) {
+//                //tweak right
+//                driveCartesian(power,0,0.1);
+//            }
+//            else {
+//                //continue
+//                driveCartesian(power,0,0);
+//            }
+//
+//            telemetry.addLine("Driving: " + leftRearMotor.getCurrentPosition() + " of " + target);
+//            telemetry.addLine("Position" + getHeading());
+//            telemetry.update();
         }
 
         driveCartesian(0, 0, 0);

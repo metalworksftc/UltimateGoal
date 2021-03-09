@@ -24,6 +24,7 @@ public class Arm {
 
     private void init(HardwareMap hardwareMap, Telemetry telemetry) {
         armMotor = hardwareMap.dcMotor.get("am");
+        armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 //        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fingerServo = hardwareMap.servo.get("fs");
         this.telemetry = telemetry;
@@ -42,12 +43,14 @@ public class Arm {
     }
     public void swing (double position) {
         armMotor.setPower(position);
+        telemetry.addLine("Driving: " + armMotor.getCurrentPosition());
+        telemetry.update();
     }
 
     public  void down (double distance, double power){
-        int target = armMotor.getCurrentPosition() - (int)  distance;
-        armMotor.setPower(-power);
-        while (armMotor.getCurrentPosition() > target) {
+        int target = armMotor.getCurrentPosition() + (int)  distance;
+        armMotor.setPower(power);
+        while (armMotor.getCurrentPosition() < target) {
             telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
@@ -56,9 +59,9 @@ public class Arm {
 
     public void up (double distance, double power) {
 
-        int target = armMotor.getCurrentPosition() + (int) distance;
-        armMotor.setPower(power);
-        while (armMotor.getCurrentPosition() < target) {
+        int target = armMotor.getCurrentPosition() - (int) distance;
+        armMotor.setPower(-power);
+        while (armMotor.getCurrentPosition() > target) {
             telemetry.addLine("Driving: " + armMotor.getCurrentPosition() + " of " + target);
             telemetry.update();
         }
