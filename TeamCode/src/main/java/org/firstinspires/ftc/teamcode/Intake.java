@@ -13,7 +13,7 @@ public class Intake {
     Telemetry telemetry;
     int formerCounts;
     long formerTime;
-    double flywheelPower = -0.6;
+    double flywheelPower = -0.85 ;
     public boolean flywheelAtSpeed = false;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -47,13 +47,13 @@ public class Intake {
                 telemetry.addLine("Power " + String.valueOf(flywheelPower));
                 telemetry.update();
 
-                if (speed > -1200 && flywheelPower > -0.75) {
-                    //tweak up
-                    flywheelPower = flywheelPower - 0.1;
-                } else if (speed < -1200 && flywheelPower < 0) {
-                    //tweak down
-                    flywheelPower = flywheelPower + 0.75;
-                }
+//                if (speed > -1200 && flywheelPower > -0.75) {
+//                    //tweak up
+//                    flywheelPower = flywheelPower - 0.1;
+//                } else if (speed < -1200 && flywheelPower < 0) {
+//                    //tweak down
+//                    flywheelPower = flywheelPower + 0.75;
+//                }
 
                 if (speed < -1150 && speed > -1250) {
                     flywheelAtSpeed = true;

@@ -29,20 +29,20 @@ public class RingRecognition2 extends LinearOpMode {
         String rings = camera.seeRings();
 
         if (rings.equals("Quad")) {
-            standardDrive(35,95,30,70);
+            standardDrive(35,95,30,50);
 
         } else if (rings.equals("Single")) {
-            driveAround(35,75,20,30);
+            driveAround(35,75,20,10);
+            wheels.forward(5,wheels.driveSpeed);
 
         } else if (rings.equals("no stack")) {
-          standardDrive(35,45,0,70);
-         }
-
-        if (rings.equals("no stack")){
+          standardDrive(35,45,0,50);
             wheels.forward(15,0.5);
-        }
+         }
         intake.flywheel(true);
-        wheels.absoluteTurnPower(0, 0.5);
+        wheels.right(16, 0.5);
+        wheels.absoluteTurnPower(15, 0.3);
+        wheels.absoluteTurnPower(0, 0.3);
         sleep(3000);
         intake.autoPush();
         sleep(500);
