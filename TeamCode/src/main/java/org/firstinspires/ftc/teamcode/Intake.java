@@ -14,6 +14,7 @@ public class Intake {
     int formerCounts;
     long formerTime;
     double flywheelPower = -0.85 ;
+    double flywheelVelocity = -1150;
     public boolean flywheelAtSpeed = false;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -44,7 +45,7 @@ public class Intake {
                 telemetry.addLine("Time " + String.valueOf(time));
                 final long speed = 1000 * counts / time;
                 telemetry.addLine("Speed Seconds " + String.valueOf(speed));
-                telemetry.addLine("Power " + String.valueOf(flywheelPower));
+                telemetry.addLine("Power " + String.valueOf(flywheelVelocity));
                 telemetry.update();
 
 //                if (speed > -1200 && flywheelPower > -0.75) {
@@ -69,20 +70,15 @@ public class Intake {
 
 
         if (on){
-            launchMotor.setPower(flywheelPower);
+            launchMotor.setVelocity(flywheelVelocity);
         }
         else {
-            launchMotor.setPower(0);
+            launchMotor.setVelocity(0);
         }
 
         flywheelAtSpeed = true;
-        if (on){
-            launchMotor.setPower(-0.75);
-        }
-        else {
-            launchMotor.setPower(0);
-        }
     }
+
     public void push(boolean on) {
     pushServo.setPosition(on? 1.0: 0);
     }
