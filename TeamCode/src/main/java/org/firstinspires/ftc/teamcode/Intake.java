@@ -14,7 +14,7 @@ public class Intake {
     int formerCounts;
     long formerTime;
     double flywheelPower = -0.85 ;
-    double flywheelVelocity = -1150;
+    double flywheelVelocity = -1175;
     public boolean flywheelAtSpeed = false;
 
     public Intake(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -71,6 +71,7 @@ public class Intake {
 
         if (on){
             launchMotor.setVelocity(flywheelVelocity);
+            telemetry.addLine(String.valueOf(launchMotor.getVelocity()));
         }
         else {
             launchMotor.setVelocity(0);
