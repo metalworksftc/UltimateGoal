@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.robotcore.internal.camera.delegating.DelegatingCaptureSequence;
 
 import java.util.List;
 
@@ -51,24 +52,35 @@ public class Camera {
                 // the last time that call was made.
                 updatedRecognitions = tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
-                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+//                    telemetry.addData("# Object Detected", updatedRecognitions.size());
                     // step through the list of recognitions and display boundary info.
                     int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        telemetry.addData(String.format("  right, bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                    }
-                    telemetry.update();
-                   linearOpMode.sleep(500);
+//                    for (Recognition recognition : updatedRecognitions) {
+//                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+//                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+//                                recognition.getLeft(), recognition.getTop());
+//                        telemetry.addData(String.format("  right, bottom (%d)", i), "%.03f , %.03f",
+//                                recognition.getRight(), recognition.getBottom());
+//                    }
+//                    telemetry.update();
+//                   linearOpMode.sleep(500);
                 }
             }
         }
-        if (updatedRecognitions.size() == 0){
+        if (updatedRecognitions == null || updatedRecognitions.size() == 0){
+            telemetry.addLine("Object Detected 0");
+            telemetry.update();
+            linearOpMode.sleep(500);
             return "no stack";
         }
+        if (updatedRecognitions.get(0).getLabel().equals("Quad")){
+            telemetry.addLine("Objects Detected 4");
+        }
+        else {
+            telemetry.addLine("Objects Detected 1");
+        }
+        telemetry.update();
+        linearOpMode.sleep(500);
         return updatedRecognitions.get(0).getLabel();
     }
 
