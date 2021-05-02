@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name = "RingRecognition2")
+@Autonomous(name = "RingRecognition3")
 
-public class RingRecognition2 extends LinearOpMode {
+public class RingRecognition3 extends LinearOpMode {
     Wheels wheels;
     Camera camera;
     Arm arm;
@@ -44,14 +44,24 @@ public class RingRecognition2 extends LinearOpMode {
         wheels.right(16, 0.5);
         wheels.absoluteTurnPower(15, 0.3);
         wheels.absoluteTurnPower(0, 0.3);
-        sleep(6000);
-        intake.autoPush();
-        sleep(500);
-        intake.autoPush();
-        sleep(500);
-        intake.autoPush();
+
+
+        for (int i = 0; i < 3; i ++) {
+            double velocity = intake.flywheelMotor.getVelocity();
+
+            while (velocity > intake.flywheelVelocity + 50 || velocity < intake.flywheelVelocity - 20) {
+                sleep(250);
+                velocity =  intake.flywheelMotor.getVelocity();
+            }
+            intake.autoPush();
+        }
         wheels.forward(10,0.5);
 }
+
+
+
+
+
 
     public void standardDrive(int left, int forward, int back, int right) {
         wheels.left(left,wheels.driveSpeed);
