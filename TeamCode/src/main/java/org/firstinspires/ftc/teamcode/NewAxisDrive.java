@@ -8,16 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class NewAxisDrive extends OpMode {
     Wheels wheels;
-    private Arm arm;
-    Intake intake;
+
     DcMotor leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
 
     @Override
     public void init() {
         wheels = new Wheels(hardwareMap, telemetry);
-         arm = new Arm(hardwareMap,telemetry);
-        intake = new Intake(hardwareMap,telemetry);
-        intake.pushServo.setPosition(0);
     }
 
     @Override
